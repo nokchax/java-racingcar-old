@@ -57,4 +57,12 @@ public class RacingResult {
                 .map(Car::getName)
                 .collect(Collectors.toList());
     }
+
+    public RacingHistory getRacingHistory() {
+        return racingHistory;
+    }
+
+    public List<Car> getWinners() {
+        return winners;
+    }
 }

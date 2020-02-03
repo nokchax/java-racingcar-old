@@ -51,7 +51,6 @@ body {
 
 </head>
 <body>
-
   <div class="container">
     <div class="row">
 
@@ -59,15 +58,11 @@ body {
 
         <div class="form-show-div" class="form-group">
           <table>
-            <tr>
-              <td>박재성</td>
-            </tr>
-            <tr>
-              <td>윤지수</td>
-            </tr>
-            <tr>
-              <td>정호영</td>
-            </tr>
+              {{#names}}
+              <tr>
+                  <td>{{.}}</td>
+              </tr>
+              {{/names}}
           </table>
 
         </div>
