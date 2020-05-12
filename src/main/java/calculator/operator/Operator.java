@@ -19,7 +19,7 @@ public enum Operator {
 
     private final String symbol;
 
-    Operator(String symbol) {
+    Operator(final String symbol) {
         this.symbol = symbol;
     }
 
@@ -27,7 +27,7 @@ public enum Operator {
         return symbol;
     }
 
-    public static Operator of(String symbol) {
+    public static Operator of(final String symbol) {
         if(!OPERATORS.containsKey(symbol)) {
             throw new IllegalArgumentException(NOT_SUPPORTED_OPERATION + " : " + symbol);
         }

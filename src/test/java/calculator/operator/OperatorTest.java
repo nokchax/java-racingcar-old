@@ -18,7 +18,7 @@ class OperatorTest {
     @MethodSource
     @ParameterizedTest(name = "{0} -> {1}")
     @DisplayName("문자열을 받았을때 해당 연산자를 잘 리턴하는지")
-    void of(String symbol, Operator expectedOperator) {
+    void of(final String symbol, final Operator expectedOperator) {
         assertThat(Operator.of(symbol)).isEqualByComparingTo(expectedOperator);
     }
 
@@ -34,7 +34,7 @@ class OperatorTest {
     @ParameterizedTest
     @NullAndEmptySource
     @DisplayName("null이거나 빈 문자열을 받았을때 예외를 발생시키는지")
-    void ofException(String symbol) {
+    void ofException(final String symbol) {
         assertThatThrownBy(() -> Operator.of(symbol))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(ErrorMessage.NOT_SUPPORTED_OPERATION);
