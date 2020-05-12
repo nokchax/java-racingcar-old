@@ -39,4 +39,20 @@ class OperatorTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining(ErrorMessage.NOT_SUPPORTED_OPERATION);
     }
+
+    @MethodSource
+    @ParameterizedTest(name = "{1} {0} {2} = {3}")
+    @DisplayName("연산자 enum이 해당 기호에 맞는 연산을 잘 수행하는지")
+    void operate(Operator operator, int x, int y, int expected) {
+        assertThat(operator.operate(x, y)).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> operate() {
+        return Stream.of(
+                Arguments.of(Operator.PLUS, 10, 5, 15),
+                Arguments.of(Operator.MINUS, 10, 5, 5),
+                Arguments.of(Operator.MULTIPLY, 10, 5, 50),
+                Arguments.of(Operator.DIVIDE, 10, 5, 2)
+        );
+    }
 }
