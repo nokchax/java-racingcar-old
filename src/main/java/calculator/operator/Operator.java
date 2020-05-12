@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import static calculator.exception.ErrorMessage.NOT_SUPPORTED_OPERATION;
+
 public enum Operator {
     PLUS("+"),
     MINUS("-"),
@@ -27,7 +29,7 @@ public enum Operator {
 
     public static Operator of(String symbol) {
         if(!OPERATORS.containsKey(symbol)) {
-            throw new IllegalArgumentException("Not supported operation : " + symbol);
+            throw new IllegalArgumentException(NOT_SUPPORTED_OPERATION + " : " + symbol);
         }
 
         return OPERATORS.get(symbol);
