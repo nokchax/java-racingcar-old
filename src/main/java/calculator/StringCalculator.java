@@ -5,8 +5,8 @@ import calculator.interpreter.Interpreter;
 
 public class StringCalculator {
     public static int calculate(String expressionString) {
-        Expression arithmeticExpression = Interpreter.interpret(expressionString);
+        Expression expression = Interpreter.interpret(expressionString);
 
-        return arithmeticExpression.calculate();
+        return expression.calculate();
     }
 }
