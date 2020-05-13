@@ -8,11 +8,11 @@ import java.util.regex.Pattern;
 
 public class Interpreter {
     private static final Pattern EXPRESSION_PATTERN = Pattern.compile("(.+)\\b([+\\-*/])(-?\\d+)");
-    public static final int SUB_EXPRESSION_GROUP_INDEX = 1;
-    public static final int OPERATOR_GROUP_INDEX = 2;
-    public static final int OPERAND_GROUP_INDEX = 3;
-    public static final String BLANK = " ";
-    public static final String EMPTY = "";
+    private static final int SUB_EXPRESSION_GROUP_INDEX = 1;
+    private static final int OPERATOR_GROUP_INDEX = 2;
+    private  static final int OPERAND_GROUP_INDEX = 3;
+    private static final String BLANK = " ";
+    private static final String EMPTY = "";
 
     private Interpreter() {}
 
@@ -52,6 +52,4 @@ public class Interpreter {
             throw new IllegalArgumentException("Expression is not valid : " + expressionString);
         }
     }
-
-
 }
