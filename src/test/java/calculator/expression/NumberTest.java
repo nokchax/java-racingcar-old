@@ -51,6 +51,16 @@ class NumberTest {
         assertThat(number).isEqualTo(anotherNumber);
     }
 
+    @ParameterizedTest(name = "{0} != {1}")
+    @DisplayName("테스트를 위한 not equals 메소드 테스트")
+    @CsvSource({"-1,1", "1,-1"})
+    void notEquals(final String exp, final String anotherExp) {
+        Number number = Number.of(exp);
+        Number anotherNumber = Number.of(anotherExp);
+
+        assertThat(number).isNotEqualTo(anotherNumber);
+    }
+
     @ParameterizedTest(name = "{0} = {1}")
     @CsvSource({"1,1", "-1,-1"})
     @DisplayName("수식의 계산이 올바른지")

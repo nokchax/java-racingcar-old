@@ -54,6 +54,17 @@ class ExpressionTest {
         assertThat(expression).isEqualTo(otherExp);
     }
 
+    @ParameterizedTest
+    @DisplayName("테스트를 위한 not equals 메소드 테스트")
+    @CsvSource({"1+2,+,3,2+1,+,3", "1,+,2,2,+,1"})
+    void equals(final String subExp, final String operator, final String operand,
+                final String anotherSubExp, final String anotherOperator, final String anotherOperand) {
+        Expression expression = Expression.of(subExp, operator, operand);
+        Expression otherExp = Expression.of(anotherSubExp, anotherOperator, anotherOperand);
+
+        assertThat(expression).isNotEqualTo(otherExp);
+    }
+
     @ParameterizedTest(name = "{0} {1} {2} = {3}")
     @CsvSource({"1,+,2,3", "1,-,2,-1", "1,*,2,2", "2,/,1,2", "1+2,+,3,6"})
     @DisplayName("수식의 계산이 올바른지")
