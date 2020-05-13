@@ -12,23 +12,23 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.*;
 
 @DisplayName("수식 테스트")
-class ExpressionTest {
+class ArithmeticExpressionTest {
 
     @Test
     @DisplayName("of 사용으로 객체 생성 확인")
     void constructor() {
-        Expression expression = Expression.of("1", "+", "2");
+        ArithmeticExpression arithMeticExpression = ArithmeticExpression.of("1", "+", "2");
 
-        assertThatCode(() -> Expression.of("1", "+", "2"))
+        assertThatCode(() -> ArithmeticExpression.of("1", "+", "2"))
                 .doesNotThrowAnyException();
-        assertThat(expression).isNotNull();
+        assertThat(arithMeticExpression).isNotNull();
     }
 
     @ParameterizedTest
     @MethodSource
     @DisplayName("of 객체 생성시 exception 테스트")
     void ofException(final String subExp, final String operator, final String operand, final Class<?> exceptionClass) {
-        assertThatThrownBy(() -> Expression.of(subExp, operator, operand))
+        assertThatThrownBy(() -> ArithmeticExpression.of(subExp, operator, operand))
                 .isInstanceOf(exceptionClass);
 
     }
@@ -48,10 +48,10 @@ class ExpressionTest {
     @DisplayName("테스트를 위한 equals 메소드 테스트")
     @CsvSource({"1+2,+,3", "1,+,2"})
     void equals(final String subExp, final String operator, final String operand) {
-        Expression expression = Expression.of(subExp, operator, operand);
-        Expression otherExp = Expression.of(subExp, operator, operand);
+        ArithmeticExpression arithmeticExpression = ArithmeticExpression.of(subExp, operator, operand);
+        ArithmeticExpression otherExp = ArithmeticExpression.of(subExp, operator, operand);
 
-        assertThat(expression).isEqualTo(otherExp);
+        assertThat(arithmeticExpression).isEqualTo(otherExp);
     }
 
     @ParameterizedTest
@@ -59,18 +59,18 @@ class ExpressionTest {
     @CsvSource({"1+2,+,3,2+1,+,3", "1,+,2,2,+,1"})
     void equals(final String subExp, final String operator, final String operand,
                 final String anotherSubExp, final String anotherOperator, final String anotherOperand) {
-        Expression expression = Expression.of(subExp, operator, operand);
-        Expression otherExp = Expression.of(anotherSubExp, anotherOperator, anotherOperand);
+        ArithmeticExpression arithmeticExpression = ArithmeticExpression.of(subExp, operator, operand);
+        ArithmeticExpression otherExp = ArithmeticExpression.of(anotherSubExp, anotherOperator, anotherOperand);
 
-        assertThat(expression).isNotEqualTo(otherExp);
+        assertThat(arithmeticExpression).isNotEqualTo(otherExp);
     }
 
     @ParameterizedTest(name = "{0} {1} {2} = {3}")
     @CsvSource({"1,+,2,3", "1,-,2,-1", "1,*,2,2", "2,/,1,2", "1+2,+,3,6"})
     @DisplayName("수식의 계산이 올바른지")
     void operate(final String subExp, final String operator, final String operand, final int expected) {
-        Expression expression = Expression.of(subExp, operator, operand);
+        ArithmeticExpression arithmeticExpression = ArithmeticExpression.of(subExp, operator, operand);
 
-        assertThat(expression.operate()).isEqualTo(expected);
+        assertThat(arithmeticExpression.calculate()).isEqualTo(expected);
     }
 }

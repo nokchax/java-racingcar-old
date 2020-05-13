@@ -17,11 +17,11 @@ class NumberTest {
     @Test
     @DisplayName("of 사용으로 객체 생성 확인")
     void constructor() {
-        Expression expression = Number.of("1");
+        ArithmeticExpression arithMeticExpression = Number.of("1");
 
         assertThatCode(() -> Number.of("1"))
                 .doesNotThrowAnyException();
-        assertThat(expression).isNotNull();
+        assertThat(arithMeticExpression).isNotNull();
     }
 
     @ParameterizedTest
@@ -67,6 +67,6 @@ class NumberTest {
     void operate(final String subExp, final int expected) {
         Number number = Number.of(subExp);
 
-        assertThat(number.operate()).isEqualTo(expected);
+        assertThat(number.calculate()).isEqualTo(expected);
     }
 }

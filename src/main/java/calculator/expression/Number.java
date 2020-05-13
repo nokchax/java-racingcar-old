@@ -1,6 +1,8 @@
 package calculator.expression;
 
 
+import calculator.interpreter.MatchedExpression;
+
 public class Number extends Expression {
 
     private Number(final String numberString) {
@@ -9,12 +11,12 @@ public class Number extends Expression {
         this.operand = Integer.parseInt(numberString);
     }
 
-    public static Number of(final String numberString) {
-        return new Number(numberString);
+    public static Number of(MatchedExpression matchedExpression) {
+        return new Number(matchedExpression.getOperandString());
     }
 
     @Override
-    public int operate() {
+    public int calculate() {
         return operand;
     }
 
