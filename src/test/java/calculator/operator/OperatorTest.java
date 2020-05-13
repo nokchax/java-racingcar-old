@@ -5,6 +5,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.stream.Stream;
 
@@ -30,18 +31,27 @@ class OperatorTest {
         );
     }
 
+    @MethodSource
     @ParameterizedTest
-    @NullAndEmptySource
-    @DisplayName("null이거나 빈 문자열을 받았을때 예외를 발생시키는지")
+    @DisplayName("null 이거나 빈 문자열 혹은 포함하지 않은 심볼을 받았을 때 예외를 발생시키는지")
     void ofException(final String symbol) {
         assertThatThrownBy(() -> Operator.of(symbol))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
+    private static Stream<String> ofException() {
+        return Stream.of(
+                null,
+                "",
+                "$",
+                "%"
+        );
+    }
+
     @MethodSource
     @ParameterizedTest(name = "{1} {0} {2} = {3}")
     @DisplayName("연산자 enum이 해당 기호에 맞는 연산을 잘 수행하는지")
-    void operate(Operator operator, int x, int y, int expected) {
+    void operate(final Operator operator, final int x, final int y, final int expected) {
         assertThat(operator.operate(x, y)).isEqualTo(expected);
     }
 
