@@ -11,12 +11,14 @@ public class Interpreter {
     public static final int SUB_EXPRESSION_GROUP_INDEX = 1;
     public static final int OPERATOR_GROUP_INDEX = 2;
     public static final int OPERAND_GROUP_INDEX = 3;
+    public static final String BLANK = " ";
+    public static final String EMPTY = "";
 
     private Interpreter() {}
 
     public static Expression interpret(String expressionString) {
         validate(expressionString);
-        Matcher matcher = EXPRESSION_PATTERN.matcher(expressionString.replace(" ", ""));
+        Matcher matcher = EXPRESSION_PATTERN.matcher(expressionString.replace(BLANK, EMPTY));
 
         if(isNumber(matcher)) {
             return Number.of(expressionString);
