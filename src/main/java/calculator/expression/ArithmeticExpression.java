@@ -13,6 +13,7 @@ public class ArithmeticExpression extends Expression {
     protected ArithmeticExpression() {}
 
     public static ArithmeticExpression of(MatchedExpression matchedExpression) {
+        validate(matchedExpression);
         ArithmeticExpression expression = new ArithmeticExpression();
 
         expression.subExpression = Interpreter.interpret(matchedExpression.getSubExpressionString());
@@ -20,6 +21,16 @@ public class ArithmeticExpression extends Expression {
         expression.operator = Operator.of(matchedExpression.getOperatorString());
 
         return expression;
+    }
+
+    private static void validate(MatchedExpression matchedExpression) {
+        if(matchedExpression == null) {
+            throw new IllegalArgumentException("MatchedExpression is null");
+        }
+
+        if(matchedExpression.isNumberExpression()) {
+            throw new IllegalArgumentException("MatchedExpression is not arithmetic expression");
+        }
     }
 
     @Override

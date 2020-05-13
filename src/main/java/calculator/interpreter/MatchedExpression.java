@@ -12,14 +12,19 @@ public class MatchedExpression {
     private static final String EMPTY = "";
 
     private Matcher matcher;
+    private String originExpression;
 
     private MatchedExpression() {}
 
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public static MatchedExpression match(String expressionString) {
         validate(expressionString);
 
         MatchedExpression matchedExpression = new MatchedExpression();
+
         matchedExpression.matcher = EXPRESSION_PATTERN.matcher(expressionString.replace(BLANK, EMPTY));
+        matchedExpression.originExpression = expressionString;
+        matchedExpression.matcher.matches();
 
         return matchedExpression;
     }
@@ -38,7 +43,7 @@ public class MatchedExpression {
 
     public String getOperandString() {
         if(isNumberExpression()) {
-            return matcher.group();
+            return originExpression;
         }
 
         return matcher.group(OPERAND_GROUP_INDEX);

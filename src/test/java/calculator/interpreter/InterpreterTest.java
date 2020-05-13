@@ -1,6 +1,7 @@
 package calculator.interpreter;
 
 import calculator.expression.ArithmeticExpression;
+import calculator.expression.Expression;
 import calculator.expression.Number;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -10,6 +11,7 @@ import org.junit.jupiter.params.provider.NullAndEmptySource;
 
 import java.util.stream.Stream;
 
+import static calculator.helper.Generator.matchedExpressionOf;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
@@ -27,16 +29,16 @@ class InterpreterTest {
     @ParameterizedTest
     @MethodSource
     @DisplayName("올바른 수식을 생성하는지")
-    void interpret(final String expString, final ArithmeticExpression exp) {
+    void interpret(final String expString, final Expression exp) {
         assertThat(Interpreter.interpret(expString))
                 .isEqualTo(exp);
     }
 
     private static Stream<Arguments> interpret() {
         return Stream.of(
-                Arguments.of("1", Number.of("1")),
-                Arguments.of("1 + 2", ArithmeticExpression.of("1", "+", "2")),
-                Arguments.of("1 + 2 + 3", ArithmeticExpression.of("1 + 2", "+", "3"))
+                Arguments.of("1", Number.of(matchedExpressionOf("1"))),
+                Arguments.of("1 + 2", ArithmeticExpression.of(matchedExpressionOf("1", "+", "2"))),
+                Arguments.of("1 + 2 + 3", ArithmeticExpression.of(matchedExpressionOf("1 + 2", "+", "3")))
         );
     }
 }
