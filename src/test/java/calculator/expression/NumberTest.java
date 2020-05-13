@@ -6,6 +6,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.stream.Stream;
 
@@ -28,17 +29,16 @@ class NumberTest {
     @ParameterizedTest
     @MethodSource
     @DisplayName("of 객체 생성시 exception 테스트")
-    void ofException(final String exp, final Class<?> exceptionClass) {
-        assertThatThrownBy(() -> Number.of(matchedExpressionOf(exp)))
-                .isInstanceOf(exceptionClass);
-
+    void ofException(final String exp) {
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> Number.of(matchedExpressionOf(exp)));
     }
 
-    private static Stream<Arguments> ofException() {
+    private static Stream<String> ofException() {
         return Stream.of(
-                Arguments.of("",IllegalArgumentException.class),
-                Arguments.of(null, IllegalArgumentException.class),
-                Arguments.of("+", NumberFormatException.class)
+                "",
+                null,
+                "+"
         );
     }
 

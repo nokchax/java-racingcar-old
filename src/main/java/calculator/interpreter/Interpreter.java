@@ -9,7 +9,7 @@ public class Interpreter {
     private Interpreter() {}
 
     public static Expression interpret(String expressionString) {
-        MatchedExpression matchedExpression = MatchedExpression.match(expressionString);
+        MatchedExpression matchedExpression = new MatchedExpression(expressionString);
 
         if(matchedExpression.isNumberExpression()) {
             return Number.of(matchedExpression);

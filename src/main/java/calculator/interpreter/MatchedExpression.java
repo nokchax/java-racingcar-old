@@ -11,22 +11,33 @@ public class MatchedExpression {
     private static final String BLANK = " ";
     private static final String EMPTY = "";
 
-    private Matcher matcher;
-    private String originExpression;
+    private final Matcher matcher;
+    private final String originExpression;
 
-    private MatchedExpression() {}
-
-    @SuppressWarnings("ResultOfMethodCallIgnored")
-    public static MatchedExpression match(String expressionString) {
+    public MatchedExpression(String expressionString) {
         validate(expressionString);
+        expressionString = expressionString.replace(BLANK, EMPTY);
 
-        MatchedExpression matchedExpression = new MatchedExpression();
+        this.matcher = EXPRESSION_PATTERN.matcher(expressionString);
+        this.originExpression = expressionString;
 
-        matchedExpression.matcher = EXPRESSION_PATTERN.matcher(expressionString.replace(BLANK, EMPTY));
-        matchedExpression.originExpression = expressionString;
-        matchedExpression.matcher.matches();
+        if(isNumberExpression()) {
+            checkValidNumberFormat();
+        }
+    }
 
-        return matchedExpression;
+    private static void validate(String expressionString) {
+        if(expressionString == null || expressionString.isEmpty()) {
+            throw new IllegalArgumentException("Expression is not valid : " + expressionString);
+        }
+    }
+
+    private void checkValidNumberFormat() {
+        try {
+            Integer.parseInt(originExpression);
+        } catch (NumberFormatException nfe) {
+            throw new IllegalArgumentException("Invalid expression");
+        }
     }
 
     public boolean isNumberExpression() {
@@ -47,11 +58,5 @@ public class MatchedExpression {
         }
 
         return matcher.group(OPERAND_GROUP_INDEX);
-    }
-
-    private static void validate(String expressionString) {
-        if(expressionString == null || expressionString.isEmpty()) {
-            throw new IllegalArgumentException("Expression is not valid : " + expressionString);
-        }
     }
 }
