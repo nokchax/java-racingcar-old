@@ -4,9 +4,7 @@ package calculator.expression;
 public class Number extends Expression {
 
     private Number(final String numberString) {
-        if(numberString == null || numberString.isEmpty()) {
-            throw new IllegalArgumentException("Number string is null or empty");
-        }
+        validate(numberString);
 
         this.operand = Integer.parseInt(numberString);
     }
@@ -18,5 +16,11 @@ public class Number extends Expression {
     @Override
     public int operate() {
         return operand;
+    }
+
+    private void validate(String numberString) {
+        if(numberString == null || numberString.isEmpty()) {
+            throw new IllegalArgumentException("Number string is null or empty");
+        }
     }
 }
