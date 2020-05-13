@@ -24,10 +24,6 @@ public enum Operator {
         this.function = function;
     }
 
-    private String getSymbol() {
-        return symbol;
-    }
-
     public static Operator of(final String symbol) {
         if(!OPERATORS.containsKey(symbol)) {
             throw new IllegalArgumentException("Not supported operation : " + symbol);
@@ -38,5 +34,9 @@ public enum Operator {
 
     public int operate(int x, int y) {
         return function.apply(x, y);
+    }
+
+    private String getSymbol() {
+        return symbol;
     }
 }
