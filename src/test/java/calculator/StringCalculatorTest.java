@@ -13,74 +13,36 @@ import static org.assertj.core.api.Assertions.assertThat;
 class StringCalculatorTest {
 
     @MethodSource
-    @DisplayName("덧셈 테스트")
-    @ParameterizedTest(name = "{0} + {1} = {2}")
-    void add(int x, int y, int expectedResult) {
-        int result = StringCalculator.calculate(x + " + " + y);
+    @DisplayName("기본 사칙연산 테스트")
+    @ParameterizedTest(name = "{0} = {1}")
+    void simpleArithmetic(String expressionString, int expectedResult) {
+        int result = StringCalculator.calculate(expressionString);
 
         assertThat(result).isEqualTo(expectedResult);
     }
 
-    private static Stream<Arguments> add() {
+    private static Stream<Arguments> simpleArithmetic() {
         return Stream.of(
-                Arguments.of(1, 2, 3),
-                Arguments.of(1, -2, -1),
-                Arguments.of(-1, 2, 1),
-                Arguments.of(-1, -2, -3)
-        );
-    }
-
-    @MethodSource
-    @DisplayName("뺄셈 테스트")
-    @ParameterizedTest(name = "{0} - {1} = {2}")
-    void sub(int x, int y, int expectedResult) {
-        int result = StringCalculator.calculate(x + " - " + y);
-
-        assertThat(result).isEqualTo(expectedResult);
-    }
-
-    private static Stream<Arguments> sub() {
-        return Stream.of(
-                Arguments.of(1, 2, -1),
-                Arguments.of(1, -2, 3),
-                Arguments.of(-1, 2, -3),
-                Arguments.of(-1, -2, 1)
-        );
-    }
-
-    @MethodSource
-    @DisplayName("곱셈 테스트")
-    @ParameterizedTest(name = "{0} * {1} = {2}")
-    void multi(int x, int y, int expectedResult) {
-        int result = StringCalculator.calculate(x + " * " + y);
-
-        assertThat(result).isEqualTo(expectedResult);
-    }
-
-    private static Stream<Arguments> multi() {
-        return Stream.of(
-                Arguments.of(1, 2, 2),
-                Arguments.of(1, -2, -2),
-                Arguments.of(-1, 2, -2),
-                Arguments.of(-1, -2, 2)
-        );
-    }
-
-    @MethodSource
-    @DisplayName("나눗셈 테스트")
-    @ParameterizedTest(name = "{0} / {1} = {2}")
-    void divide(int x, int y, int expectedResult) {
-        int result = StringCalculator.calculate(x + " / " + y);
-
-        assertThat(result).isEqualTo(expectedResult);
-    }
-
-    private static Stream<Arguments> divide() {
-        return Stream.of(
-                Arguments.of(2, 1, 2),
-                Arguments.of(2, -1, -2),
-                Arguments.of(-2, 1, -2),
-                Arguments.of(-2, -1, 2)
+                //plus
+                Arguments.of("1+2", 3),
+                Arguments.of("1+-2", -1),
+                Arguments.of("-1+2", 1),
+                Arguments.of("-1+-2", -3),
+                //minus
+                Arguments.of("1-2", -1),
+                Arguments.of("1--2", 3),
+                Arguments.of("-1-2", -3),
+                Arguments.of("-1--2", 1),
+                //multi
+                Arguments.of("1*2", 2),
+                Arguments.of("1*-2", -2),
+                Arguments.of("-1*2", -2),
+                Arguments.of("-1*-2", 2),
+                //divide
+                Arguments.of("2/1", 2),
+                Arguments.of("2/-1", -2),
+                Arguments.of("-2/1", -2),
+                Arguments.of("-2/-1", 2)
         );
     }
 
