@@ -6,8 +6,6 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static calculator.exception.ErrorMessage.NOT_SUPPORTED_OPERATION;
-
 public enum Operator {
     PLUS("+", Math::addExact),
     MINUS("-", Math::subtractExact),
@@ -32,7 +30,7 @@ public enum Operator {
 
     public static Operator of(final String symbol) {
         if(!OPERATORS.containsKey(symbol)) {
-            throw new IllegalArgumentException(NOT_SUPPORTED_OPERATION + " : " + symbol);
+            throw new IllegalArgumentException("Not supported operation : " + symbol);
         }
 
         return OPERATORS.get(symbol);

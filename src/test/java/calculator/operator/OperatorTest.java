@@ -1,6 +1,5 @@
 package calculator.operator;
 
-import calculator.exception.ErrorMessage;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -36,8 +35,7 @@ class OperatorTest {
     @DisplayName("null이거나 빈 문자열을 받았을때 예외를 발생시키는지")
     void ofException(final String symbol) {
         assertThatThrownBy(() -> Operator.of(symbol))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(ErrorMessage.NOT_SUPPORTED_OPERATION);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @MethodSource
