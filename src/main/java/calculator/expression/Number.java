@@ -1,7 +1,7 @@
 package calculator.expression;
 
 
-import calculator.interpreter.MatchedExpression;
+import calculator.utils.StringUtil;
 
 import java.util.Objects;
 
@@ -10,11 +10,11 @@ public class Number extends Expression {
     private Number(final String numberString) {
         validate(numberString);
 
-        this.operand = Integer.parseInt(numberString);
+        this.operand = Integer.parseInt(StringUtil.removeBlank(numberString));
     }
 
-    public static Number of(MatchedExpression matchedExpression) {
-        return new Number(matchedExpression.getOperandString());
+    public static Number of(final String numberString) {
+        return new Number(numberString);
     }
 
     @Override
@@ -23,7 +23,7 @@ public class Number extends Expression {
     }
 
     private void validate(String numberString) {
-        if(numberString == null || numberString.isEmpty()) {
+        if(StringUtil.isEmpty(numberString)) {
             throw new IllegalArgumentException("Number string is null or empty");
         }
     }

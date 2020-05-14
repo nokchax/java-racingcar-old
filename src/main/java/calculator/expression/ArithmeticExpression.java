@@ -7,30 +7,29 @@ import calculator.operator.Operator;
 import java.util.Objects;
 
 public class ArithmeticExpression extends Expression {
-    private Expression subExpression;
-    private Operator operator;
+    private final Expression subExpression;
+    private final Operator operator;
 
-    protected ArithmeticExpression() {}
-
-    public static ArithmeticExpression of(MatchedExpression matchedExpression) {
+    protected ArithmeticExpression(MatchedExpression matchedExpression) {
         validate(matchedExpression);
-        ArithmeticExpression expression = new ArithmeticExpression();
 
-        expression.subExpression = Interpreter.interpret(matchedExpression.getSubExpressionString());
-        expression.operand = Integer.parseInt(matchedExpression.getOperandString());
-        expression.operator = Operator.of(matchedExpression.getOperatorString());
-
-        return expression;
+        subExpression = Interpreter.interpret(matchedExpression.getSubExpressionString());
+        operand = Integer.parseInt(matchedExpression.getOperandString());
+        operator = Operator.of(matchedExpression.getOperatorString());
     }
 
-    private static void validate(MatchedExpression matchedExpression) {
+    private void validate(MatchedExpression matchedExpression) {
         if(matchedExpression == null) {
             throw new IllegalArgumentException("MatchedExpression is null");
         }
 
-        if(matchedExpression.isNumberExpression()) {
+        if(!matchedExpression.isValidExpression()) {
             throw new IllegalArgumentException("MatchedExpression is not arithmetic expression");
         }
+    }
+
+    public static ArithmeticExpression of(MatchedExpression matchedExpression) {
+        return new ArithmeticExpression(matchedExpression);
     }
 
     @Override

@@ -36,7 +36,7 @@ class InterpreterTest {
 
     private static Stream<Arguments> interpret() {
         return Stream.of(
-                Arguments.of("1", Number.of(matchedExpressionOf("1"))),
+                Arguments.of("1", Number.of("1")),
                 Arguments.of("1 + 2", ArithmeticExpression.of(matchedExpressionOf("1", "+", "2"))),
                 Arguments.of("1 + 2 + 3", ArithmeticExpression.of(matchedExpressionOf("1 + 2", "+", "3")))
         );

@@ -11,10 +11,10 @@ public class Interpreter {
     public static Expression interpret(String expressionString) {
         MatchedExpression matchedExpression = new MatchedExpression(expressionString);
 
-        if(matchedExpression.isNumberExpression()) {
-            return Number.of(matchedExpression);
+        if(matchedExpression.isValidExpression()) {
+            return ArithmeticExpression.of(matchedExpression);
         }
 
-        return ArithmeticExpression.of(matchedExpression);
+        return Number.of(expressionString);
     }
 }

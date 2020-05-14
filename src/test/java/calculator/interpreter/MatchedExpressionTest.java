@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
 
 import java.util.stream.Stream;
 
@@ -30,36 +31,28 @@ class MatchedExpressionTest {
     }
 
     @ParameterizedTest
-    @MethodSource
-    @DisplayName("올바르지 않은 식이 들어왔을 경우 예외를 던진다")
+    @NullAndEmptySource
+    @DisplayName("null 혹은 빈 문자열이 들어왔을 경우 예외를 던진다")
     void constructorException(final String exp) {
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> new MatchedExpression(exp));
     }
 
-    private static Stream<String> constructorException() {
-        return Stream.of(
-                "",
-                null,
-                "+"
-        );
-    }
-
     @ParameterizedTest
     @MethodSource
-    @DisplayName("숫자인지 아니면 식인지 확인")
+    @DisplayName("올바른 산술식인지 확인")
     void isNumber(final MatchedExpression matchedExpression, final boolean isNumber) {
-        assertThat(matchedExpression.isNumberExpression()).isEqualTo(isNumber);
+        assertThat(matchedExpression.isValidExpression()).isEqualTo(isNumber);
     }
 
     private static Stream<Arguments> isNumber() {
         return Stream.of(
-                Arguments.of(new MatchedExpression("2"), true),
-                Arguments.of(new MatchedExpression("+2"), true),
-                Arguments.of(new MatchedExpression("-2"), true),
-                Arguments.of(new MatchedExpression("1+2"), false),
-                Arguments.of(new MatchedExpression("-2+2"), false),
-                Arguments.of(new MatchedExpression("1+2-3*4/1"), false)
+                Arguments.of(new MatchedExpression("2"), false),
+                Arguments.of(new MatchedExpression("+2"), false),
+                Arguments.of(new MatchedExpression("-2"), false),
+                Arguments.of(new MatchedExpression("1+2"), true),
+                Arguments.of(new MatchedExpression("-2+2"), true),
+                Arguments.of(new MatchedExpression("1+2-3*4/1"), true)
         );
     }
 
@@ -80,22 +73,6 @@ class MatchedExpressionTest {
                 Arguments.of(new MatchedExpression("1+2"), "1", "+", "2"),
                 Arguments.of(new MatchedExpression("-2+2"), "-2", "+", "2"),
                 Arguments.of(new MatchedExpression("1+2-3*4/1"), "1+2-3*4", "/", "1")
-        );
-    }
-
-    @ParameterizedTest
-    @MethodSource
-    @DisplayName("숫자일때 숫자문자열을 제대로 리턴하는지")
-    void extractNumber(final MatchedExpression matchedExpression, final String operand) {
-        assertThat(matchedExpression.isNumberExpression()).isTrue();
-        assertThat(matchedExpression.getOperandString()).isEqualTo(operand);
-    }
-
-    private static Stream<Arguments> extractNumber() {
-        return Stream.of(
-                Arguments.of(new MatchedExpression("+2"), "+2"),
-                Arguments.of(new MatchedExpression("-2"), "-2"),
-                Arguments.of(new MatchedExpression("2"), "2")
         );
     }
 }
